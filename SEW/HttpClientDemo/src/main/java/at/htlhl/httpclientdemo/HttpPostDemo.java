@@ -13,21 +13,25 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.List;
 
-public class HttpGetDemo {
+public class HttpPostDemo {
+
     // Constants **********************************************************
 
-    private final String REQUEST_URL = "https://api.predic8.de/shop/v2/products?limit=1000";
+    public static final int COSTUMER = 3;
+
+    private static final String REQUEST_URL = "https://api.predic8.de/shop/v2/customers/" + COSTUMER + "/orders";
+
+    private ArrayList<Product> products = new ArrayList<Product>();
 
 
     // Fields *************************************************************
 
     private ObjectMapper jsonMapper;
 
-    // Instance creation **************************************************
-
-    public HttpGetDemo() {
-
+    public HttpPostDemo() {
         jsonMapper = new ObjectMapper();
+
+
 
         try {
             // HTTP GET-request erzeugen
@@ -46,7 +50,7 @@ public class HttpGetDemo {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             /*
-                * Die Rückmeldung verarbeiten: Status Code ok?
+             * Die Rückmeldung verarbeiten: Status Code ok?
              */
 
             System.out.println("Status Code: " + response.statusCode());
@@ -77,7 +81,8 @@ public class HttpGetDemo {
         }
     }
 
+
     public static void main(String[] args) {
-        new HttpGetDemo();
+        new HttpPostDemo();
     }
 }

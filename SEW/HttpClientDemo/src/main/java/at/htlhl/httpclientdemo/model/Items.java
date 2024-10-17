@@ -1,4 +1,4 @@
 package at.htlhl.httpclientdemo.model;
 
-public class items {
+public record Items (int product, int quantity){
 }

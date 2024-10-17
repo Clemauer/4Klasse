@@ -1,5 +1,6 @@
 package at.htlhl.httpclientdemo;
 
+import at.htlhl.httpclientdemo.model.Items;
 import at.htlhl.httpclientdemo.model.Product;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,6 +12,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HttpPostDemo {
@@ -21,24 +23,32 @@ public class HttpPostDemo {
 
     private static final String REQUEST_URL = "https://api.predic8.de/shop/v2/customers/" + COSTUMER + "/orders";
 
-    private ArrayList<Product> products = new ArrayList<Product>();
 
 
     // Fields *************************************************************
 
     private ObjectMapper jsonMapper;
 
+    private ArrayList<Items> items;
+
     public HttpPostDemo() {
         jsonMapper = new ObjectMapper();
+
+        items = new ArrayList<>();
+        items.add(new Items(1, 2));
+        items.add(new Items(2, 3));
 
 
 
         try {
+            String json = jsonMapper.writeValueAsString(items);
+            json = "{\"items\":" + json + "}";
+
             // HTTP GET-request erzeugen
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(REQUEST_URL))
                     .header("Content-Type", "application/json")
-                    .GET()
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
                     .build();
             /*
              * Den erzeugten HTTP-Request mit HttpClient senden

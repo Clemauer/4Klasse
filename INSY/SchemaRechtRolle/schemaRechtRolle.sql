@@ -1,3 +1,7 @@
+-- ausfuehren mit \i schemaRechtRolle.sql
+-- wurde mit mehreren testdaten getestet und funktioniert
+
+
 \c postgres
 
 DROP DATABASE fa02;
@@ -58,7 +62,7 @@ GRANT USAGE ON ALL SEQUENCES IN SCHEMA pers, buch TO prole;
 
 DROP ROLE IF EXISTS lrole;
 CREATE ROLE lrole;
-GRANT USAGE ON SCHEMA buch TO lrole;
+GRANT USAGE ON SCHEMA buc,pers TO lrole;
 GRANT SELECT (name) ON TABLE pers.angestellte TO lrole;
 GRANT SELECT (produkt) ON Table buch.verkaeufe TO lrole;
 

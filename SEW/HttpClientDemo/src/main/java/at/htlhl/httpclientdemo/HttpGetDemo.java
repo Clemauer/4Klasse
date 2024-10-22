@@ -1,3 +1,5 @@
+// Testrelevant
+
 package at.htlhl.httpclientdemo;
 
 import at.htlhl.httpclientdemo.model.Product;
@@ -57,6 +59,7 @@ public class HttpGetDemo {
                 JsonNode productNode = jsonNode.get("products");
 
                 List<Product> productList = jsonMapper.readerForListOf(Product.class).readValue(productNode);
+
 
                 for (Product product : productList) {
                     System.out.println(product);

@@ -37,6 +37,7 @@ public class HttpPostDemo {
         items = new ArrayList<>();
         items.add(new Items(1, 2));
         items.add(new Items(2, 3));
+        items.add(new Items(3, 1));
 
 
 
@@ -64,18 +65,13 @@ public class HttpPostDemo {
              */
 
             System.out.println("Status Code: " + response.statusCode());
-            if(response.statusCode() == HttpURLConnection.HTTP_OK) {
+            if(response.statusCode() == HttpURLConnection.HTTP_CREATED) {
                 System.out.println("Response Body: " + response.body());
 
-                JsonNode jsonNode = jsonMapper.readTree(response.body());
-                JsonNode productNode = jsonNode.get("products");
-
-                List<Product> productList = jsonMapper.readerForListOf(Product.class).readValue(productNode);
-
-                for (Product product : productList) {
-                    System.out.println(product);
-                }
+                Object responseJson = jsonMapper.readValue(response.body(), Object.class);
+                System.out.println(jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseJson));
             }
+            httpClient.close();
         } catch (URISyntaxException ex) {
             System.err.println("URISyntaxException: " + ex.getMessage());
             System.err.println("Programm will exit ...");

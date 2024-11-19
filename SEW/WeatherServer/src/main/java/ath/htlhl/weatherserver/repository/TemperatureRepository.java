@@ -1,21 +1,25 @@
 package ath.htlhl.weatherserver.repository;
 
 import ath.htlhl.weatherserver.models.Temperature;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 @Repository
 public class TemperatureRepository {
 
-    // Constants **************************************************************
-
-    private final static String INSERT_TEMPERATURE =
-            "INSERT INTO temperature (temperature, measure_time) VALUES (?, ?)";
-
-
-    // Fields *****************************************************************
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(TemperatureRepository.class);
+    private static final String INSERT_TEMPERATURE_SQL = "INSERT INTO temperature (measuretime, temp) VALUES (?, ?)";
     private JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -23,12 +27,17 @@ public class TemperatureRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    // Database CRUD operations (CRUD = Create, Read, Update, Delete) *********
-
-    public Temperature insert(Temperature temperature) {
-        jdbcTemplate.update(INSERT_TEMPERATURE, temperature.getTemperature(), temperature.getMeasureTime());
+    public Temperature insert(Temperature temperature) throws SQLException {
+        if (temperature.getMeasureTime() == null) {
+            temperature.setMeasureTime(java.time.LocalDateTime.now());
+            LOGGER.info("Set measure time to now");
+        }
+        Connection connection = jdbcTemplate.getDataSource().getConnection();
+        PreparedStatement ps = connection.prepareStatement(INSERT_TEMPERATURE_SQL);
+        ps.setTimestamp(1, Timestamp.valueOf(temperature.getMeasureTime()));
+        ps.setFloat(2, temperature.getTemperature());
+        ps.executeUpdate();
+        connection.close();
         return temperature;
     }
-
-
 }

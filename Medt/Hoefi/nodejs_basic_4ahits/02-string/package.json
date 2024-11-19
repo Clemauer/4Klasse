@@ -1,0 +1,12 @@
+{
+  "name": "02-string",
+  "version": "1.0.0",
+  "main": "01-concat.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "type" : "module"
+}

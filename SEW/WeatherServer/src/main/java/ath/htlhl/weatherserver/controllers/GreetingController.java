@@ -16,4 +16,10 @@ public class GreetingController {
         return String.format("Hello, %s!", name);
     }
 
+    // Alternative:
+    @GetMapping("/hello/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public String sayHelloAlternative(@PathVariable String name){
+        return String.format("Hello, %s!", name);
+    }
 }

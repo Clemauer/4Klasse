@@ -1,0 +1,10 @@
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 14:24:00', 3.4);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 01:00:00', 3.8);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 02:00:00', 4.1);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 03:00:00', 4.5);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 04:00:00', 4.9);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 05:00:00', 5.2);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 06:00:00', 5.6);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 07:00:00', 6.0);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 08:00:00', 6.3);
+INSERT INTO temperature(measuretime, temp) VALUES('2024-11-12 09:00:00', 6.7);

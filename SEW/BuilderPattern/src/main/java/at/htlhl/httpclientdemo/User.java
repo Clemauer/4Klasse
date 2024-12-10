@@ -76,7 +76,7 @@ public class User {
         }
 
         public User build(){
-            return new User(this);
+            User user = new User(this);
             validateUserObject(user);
             return user;
         }

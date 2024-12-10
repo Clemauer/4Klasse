@@ -24,4 +24,10 @@ public class TemperatureController {
         temperatureRepository.insert(temperature);
         return temperature;
     }
+
+    @GetMapping("")
+    @ResponseStatus(HttpStatus.OK)
+    public Temperature findLatest() throws SQLException {
+        return temperatureRepository.findLatestTemperature();
+    }
 }
